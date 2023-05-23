@@ -51,10 +51,10 @@
     "commands": [
       {
         "command": "extension.ToTailwindcss",
-        "title": "page -> Unocss"
+        "title": "page -> Tailwindcss"
       },
       {
-        "command": "extension.InlineStyleToUnocss",
+        "command": "extension.InlineStyleToTailwindcss",
         "title": "style -> Tailwindcss"
       }
     ],

@@ -1,12 +1,12 @@
 import * as vscode from 'vscode'
 import { CssToTailwindcssProcess } from './process'
-import { LRUCache, getMultipedUnocssText } from './utils'
+import { LRUCache, getMultipedTailwindcssText } from './utils'
 // 'use strict'
 
 // let config = null
 // 插件被激活时调用activate
 const cacheMap = new LRUCache(500)
-
+// todo: 如果当前html中已有class或className则合并进去
 export function activate(context: vscode.ExtensionContext) {
   const styleReg = /style="([^"]+)"/
   const { dark, light } = vscode.workspace.getConfiguration('to-tailwindcss')
@@ -34,6 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
   // 注册ToTailwindcss命令
   vscode.commands.registerTextEditorCommand('extension.ToTailwindcss', async (textEditor) => {
     const doc = textEditor.document
+    const isJsx = doc.languageId === 'typescriptreact'
     const fileName = doc.fileName
     const start = new vscode.Position(0, 0)
     const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
@@ -41,8 +42,9 @@ export function activate(context: vscode.ExtensionContext) {
     const selection = new vscode.Range(start, end)
     const text = doc.getText(selection)
     // 替换文件内容
-    const newSelection = await process.convertAll(text, fileName)
-
+    const newSelection = await process.convertAll(text, fileName, isJsx)
+    if (!newSelection)
+      return
     textEditor.edit((builder) => {
       builder.replace(selection, newSelection)
     })
@@ -51,6 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
   // 注册InlineStyleToTailwindcss命令
   const disposable = vscode.commands.registerTextEditorCommand('extension.InlineStyleToTailwindcss', async (textEditor) => {
     const doc = textEditor.document
+    const isJsx = doc.languageId === 'typescriptreact'
     let selection: vscode.Selection | vscode.Range = textEditor.selection
     // 获取选中区域
     if (selection.isEmpty) {
@@ -59,7 +62,9 @@ export function activate(context: vscode.ExtensionContext) {
       selection = new vscode.Range(start, end)
     }
     const text = doc.getText(selection)
-    const newSelection = await process.convert(text)
+    const newSelection = await process.convert(text, isJsx)
+    if (!newSelection)
+      return
     // 替换文件内容
     textEditor.edit((builder) => {
       builder.replace(selection, newSelection)
@@ -127,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
           return
         if (cacheMap.has((selectedText)))
           return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
-        const selectedUnocssText = getMultipedUnocssText(selectedText)
+        const selectedUnocssText = getMultipedTailwindcssText(selectedText)
         if (!selectedUnocssText)
           return
         // 设置缓存

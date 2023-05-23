@@ -8,8 +8,11 @@ export class CssToTailwindcssProcess {
      * @param {string} code origin text
      * @return {string} transformed text
      */
-  convert(text: string) {
-    return getMultipedTailwindcssText(text) ?? text
+  convert(text: string, isJsx: boolean) {
+    const tailwindcss = getMultipedTailwindcssText(text)
+    if (!tailwindcss)
+      return ''
+    return `${isJsx ? 'className' : 'class'}="${tailwindcss}"`
   }
 
   /**
@@ -18,11 +21,14 @@ export class CssToTailwindcssProcess {
      * @param {string} code origin text
      * @return {string} transformed text
      */
-  async convertAll(code: string, fileName: string): Promise<string> {
+  async convertAll(code: string, fileName: string, isJsx: boolean): Promise<string> {
     if (!code)
       return code
     const type = getCssType(fileName)
-    const unocss = (await transfromCode(code, fileName, type as any)) ?? code
-    return unocss
+    const tailwindcss = (await transfromCode(code, fileName, type as any))
+    if (!tailwindcss)
+      return ''
+
+    return `${isJsx ? 'className' : 'class'}="${tailwindcss}"`
   }
 }
