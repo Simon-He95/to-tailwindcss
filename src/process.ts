@@ -5,8 +5,8 @@ export class CssToTailwindcssProcess {
   /**
      * transform px to rpx
      *
-     * @param {string} code origin text
-     * @return {string} transformed text
+     * @param {string} code origin
+     * @return {boolean} isJsx
      */
   convert(text: string, isJsx: boolean) {
     const tailwindcss = getMultipedTailwindcssText(text)
@@ -16,10 +16,11 @@ export class CssToTailwindcssProcess {
   }
 
   /**
-     * transform all px to rpx
+     * transform all page to tailwindcss
      *
-     * @param {string} code origin text
-     * @return {string} transformed text
+     * @param {string} code origin
+     * @return {string} fileName
+     * @return {boolean} isJsx
      */
   async convertAll(code: string, fileName: string, isJsx: boolean): Promise<string> {
     if (!code)
