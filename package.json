@@ -1,10 +1,10 @@
 {
   "publisher": "simonhe",
-  "name": "vscode-toTailwindcss",
-  "displayName": "vscode-toTailwindcss",
+  "name": "to-tailwindcss",
+  "displayName": "To Tailwindcss",
   "version": "0.0.0",
   "packageManager": "pnpm@8.1.1",
-  "description": "vscode-toTailwindcss",
+  "description": "Vscode extension transform css to tailwindcss",
   "author": "Simon He <https://github.com/Simon-He95>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
