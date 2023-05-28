@@ -1,4 +1,6 @@
 import { toTailwindcss } from 'transform-to-tailwindcss'
+import * as vscode from 'vscode'
+import fg from 'fast-glob'
 
 export type CssType = 'less' | 'scss' | 'css' | 'stylus'
 export function getCssType(filename: string) {
@@ -64,4 +66,17 @@ export class LRUCache {
   has(key: any) {
     return this.cache.has(key)
   }
+}
+
+export async function hasFile(filename: string) {
+  const workspaceFolders = vscode.workspace.workspaceFolders
+  if (!workspaceFolders)
+    return
+  const cwd = workspaceFolders[0].uri.fsPath
+  const entries = await fg(`**/${filename}`, {
+    cwd,
+    ignore: ['**/dist/**', '**/node_modules/**'],
+  })
+
+  return entries.length
 }
