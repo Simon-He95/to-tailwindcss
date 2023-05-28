@@ -9,7 +9,7 @@ const cacheMap = new LRUCache(500)
 // todo: 如果当前html中已有class或className则合并进去
 export async function activate(context: vscode.ExtensionContext) {
   // 如果当前环境中有 tailwind.config.js才激活
-  const isTailwindcssEnv = await hasFile('tailwind.config.js')
+  const isTailwindcssEnv = await hasFile(['**/tailwind.config.js', '**/tailwind.config.ts'])
 
   if (!isTailwindcssEnv)
     return

@@ -5,6 +5,9 @@
 
 vscode extension -> transform css to tailwindcss
 
+## Feature
+if your project not found `tailwind.config.ts` or `tailwind.config.js`, the extension will not be activated
+
 ## :coffee:
 
 [buy me a cup of coffee](https://github.com/Simon-He95/sponsor)

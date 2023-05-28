@@ -68,12 +68,12 @@ export class LRUCache {
   }
 }
 
-export async function hasFile(filename: string) {
+export async function hasFile(source: string | string[]) {
   const workspaceFolders = vscode.workspace.workspaceFolders
   if (!workspaceFolders)
     return
   const cwd = workspaceFolders[0].uri.fsPath
-  const entries = await fg(`**/${filename}`, {
+  const entries = await fg(source, {
     cwd,
     ignore: ['**/dist/**', '**/node_modules/**'],
   })
