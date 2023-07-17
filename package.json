@@ -37,34 +37,34 @@
     "menus": {
       "editor/context": [
         {
-          "when": "editorFocus && editorLangId !== typescript",
-          "command": "extension.ToTailwindcss",
+          "when": "editorFocus && !editorHasSelection && editorLangId !== typescript",
+          "command": "totailwind.ToTailwindcss",
           "group": "6_px"
         },
         {
           "when": "editorHasSelection",
-          "command": "extension.InlineStyleToTailwindcss",
+          "command": "totailwind.InlineStyleToTailwindcss",
           "group": "6_px"
         }
       ]
     },
     "commands": [
       {
-        "command": "extension.ToTailwindcss",
+        "command": "totailwind.ToTailwindcss",
         "title": "page -> Tailwindcss"
       },
       {
-        "command": "extension.InlineStyleToTailwindcss",
+        "command": "totailwind.InlineStyleToTailwindcss",
         "title": "style -> Tailwindcss"
       }
     ],
     "keybindings": [
       {
-        "command": "extension.ToTailwindcss",
+        "command": "totailwind.ToTailwindcss",
         "key": "cmd+Alt+p"
       },
       {
-        "command": "extension.InlineStyleToTailwindcss",
+        "command": "totailwind.InlineStyleToTailwindcss",
         "key": "Alt+shift+p"
       }
     ]
@@ -84,6 +84,7 @@
     "@antfu/eslint-config": "^0.38.4",
     "@types/node": "^18.15.11",
     "@types/vscode": "^1.77.0",
+    "@vscode-use/utils": "^0.0.32",
     "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
     "esno": "^0.16.3",

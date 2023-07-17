@@ -63,6 +63,10 @@ export class LRUCache {
     this.cache.set(key, value)
   }
 
+  clear() {
+    return this.cache.clear()
+  }
+
   has(key: any) {
     return this.cache.has(key)
   }
