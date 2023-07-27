@@ -36,21 +36,21 @@
   "contributes": {
     "submenus": [
       {
-        "id": "submenuId",
+        "id": "totailwind",
         "label": "totailwind"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "submenu": "submenuId",
+          "submenu": "totailwind",
           "group": "6_px"
         }
       ],
-      "submenuId": [
+      "totailwind": [
         {
           "command": "totailwind.ToTailwindcss",
-          "when": "editorFocus && editorLangId !== typescript && !editorHasSelection"
+          "when": "editorFocus && !editorHasSelection && (editorLangId == typescript || editorLangId == javascript || editorLangId == vue)"
         },
         {
           "command": "totailwind.InlineStyleToTailwindcs",
