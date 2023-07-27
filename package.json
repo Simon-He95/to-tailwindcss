@@ -34,17 +34,27 @@
     "onStartupFinished"
   ],
   "contributes": {
+    "submenus": [
+      {
+        "id": "submenuId",
+        "label": "totailwind"
+      }
+    ],
     "menus": {
       "editor/context": [
         {
-          "when": "editorFocus && !editorHasSelection && editorLangId !== typescript",
-          "command": "totailwind.ToTailwindcss",
+          "submenu": "submenuId",
           "group": "6_px"
+        }
+      ],
+      "submenuId": [
+        {
+          "command": "totailwind.ToTailwindcss",
+          "when": "editorFocus && editorLangId !== typescript && !editorHasSelection"
         },
         {
-          "when": "editorHasSelection",
-          "command": "totailwind.InlineStyleToTailwindcss",
-          "group": "6_px"
+          "command": "totailwind.InlineStyleToTailwindcs",
+          "when": "editorHasSelection"
         }
       ]
     },
@@ -56,16 +66,6 @@
       {
         "command": "totailwind.InlineStyleToTailwindcss",
         "title": "style -> Tailwindcss"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "totailwind.ToTailwindcss",
-        "key": "cmd+Alt+p"
-      },
-      {
-        "command": "totailwind.InlineStyleToTailwindcss",
-        "key": "Alt+shift+p"
       }
     ]
   },
