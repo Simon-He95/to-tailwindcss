@@ -49,20 +49,12 @@
       ],
       "totailwind": [
         {
-          "command": "totailwind.ToTailwindcss",
-          "when": "editorFocus && !editorHasSelection && (editorLangId == typescript || editorLangId == javascript || editorLangId == vue)"
-        },
-        {
-          "command": "totailwind.InlineStyleToTailwindcs",
+          "command": "totailwind.InlineStyleToTailwindcss",
           "when": "editorHasSelection"
         }
       ]
     },
     "commands": [
-      {
-        "command": "totailwind.ToTailwindcss",
-        "title": "page -> Tailwindcss"
-      },
       {
         "command": "totailwind.InlineStyleToTailwindcss",
         "title": "style -> Tailwindcss"
@@ -91,7 +83,8 @@
     "fast-glob": "^3.2.12",
     "pnpm": "^8.1.1",
     "rimraf": "^4.4.1",
-    "transform-to-tailwindcss": "^0.0.5",
+    "transform-to-tailwindcss": "^0.0.9",
+    "transform-to-tailwindcss-core": "^0.0.5",
     "tsup": "^6.7.0",
     "typescript": "^5.0.3",
     "vite": "^4.2.1",

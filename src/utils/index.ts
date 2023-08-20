@@ -1,4 +1,4 @@
-import { toTailwindcss } from 'transform-to-tailwindcss'
+import { toTailwindcss } from 'transform-to-tailwindcss-core'
 import * as vscode from 'vscode'
 import fg from 'fast-glob'
 

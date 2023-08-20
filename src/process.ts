@@ -22,11 +22,11 @@ export class CssToTailwindcssProcess {
      * @return {string} fileName
      * @return {boolean} isJsx
      */
-  async convertAll(code: string, fileName: string, isJsx: boolean): Promise<string> {
+  async convertAll(code: string, filepath: string, isJsx: boolean): Promise<string> {
     if (!code)
       return code
-    const type = getCssType(fileName)
-    const tailwindcss = (await transfromCode(code, fileName, type as any))
+    const type = getCssType(filepath) as any
+    const tailwindcss = (await transfromCode(code, { filepath, type }))
     if (!tailwindcss)
       return ''
 
