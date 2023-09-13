@@ -6,7 +6,7 @@ import { LRUCache, getMultipedTailwindcssText, hasFile } from './utils'
 
 // let config = null
 // 插件被激活时调用activate
-const cacheMap = new LRUCache(500)
+const cacheMap = new LRUCache(5000)
 // todo: 如果当前html中已有class或className则合并进去
 export async function activate(context: vscode.ExtensionContext) {
   // 如果当前环境中有 tailwind.config.js才激活
@@ -80,6 +80,12 @@ export async function activate(context: vscode.ExtensionContext) {
     updateText((builder) => {
       builder.replace(selection, newSelection)
     })
+  }))
+
+  context.subscriptions.push(vscode.window.onDidChangeTextEditorVisibleRanges(() => {
+    // 移除装饰器
+    if (vscode.window.activeTextEditor)
+      vscode.window.activeTextEditor.setDecorations(decorationType, [])
   }))
 
   // copy
