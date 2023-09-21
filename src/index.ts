@@ -2,6 +2,8 @@ import * as vscode from 'vscode'
 import { addEventListener, copyText, getConfiguration, message, registerCommand, updateText } from '@vscode-use/utils'
 import { CssToTailwindcssProcess } from './process'
 import { LRUCache, getMultipedTailwindcssText, hasFile } from './utils'
+import { openPlayground } from './openPlayground'
+import { openTailwindPlayground } from './openTailwindPlayground'
 // 'use strict'
 
 // let config = null
@@ -11,6 +13,9 @@ const cacheMap = new LRUCache(5000)
 export async function activate(context: vscode.ExtensionContext) {
   // 如果当前环境中有 tailwind.config.js才激活
   const isTailwindcssEnv = await hasFile(['**/tailwind.config.js', '**/tailwind.config.ts'])
+
+  openPlayground(context)
+  openTailwindPlayground(context)
 
   if (!isTailwindcssEnv)
     return
@@ -62,7 +67,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }))
 
   // 注册InlineStyleToTailwindcss命令
-  disposes.push(vscode.commands.registerTextEditorCommand('totailwind.InlineStyleToTailwindcss', async (textEditor) => {
+  disposes.push(registerCommand('totailwind.InlineStyleToTailwindcss', async (textEditor) => {
     const doc = textEditor.document
     const isJsx = doc.languageId === 'typescriptreact'
     let selection: vscode.Selection | vscode.Range = textEditor.selection

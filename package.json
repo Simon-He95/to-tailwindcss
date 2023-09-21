@@ -51,6 +51,12 @@
         {
           "command": "totailwind.InlineStyleToTailwindcss",
           "when": "editorHasSelection"
+        },
+        {
+          "command": "totailwind.openTailwindPlayground"
+        },
+        {
+          "command": "totailwind.openPlayground"
         }
       ]
     },
@@ -58,6 +64,14 @@
       {
         "command": "totailwind.InlineStyleToTailwindcss",
         "title": "style -> Tailwindcss"
+      },
+      {
+        "command": "totailwind.openTailwindPlayground",
+        "title": "openTailwindPlayground"
+      },
+      {
+        "command": "totailwind.openPlayground",
+        "title": "openPlayground"
       }
     ]
   },
@@ -76,6 +90,7 @@
     "@antfu/eslint-config": "^0.38.4",
     "@types/node": "^18.15.11",
     "@types/vscode": "^1.77.0",
+    "@vscode-use/createwebview": "^0.0.11",
     "@vscode-use/utils": "^0.0.32",
     "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
