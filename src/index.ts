@@ -180,6 +180,8 @@ export async function activate(context: vscode.ExtensionContext) {
   // 监听编辑器选择内容变化的事件
   disposes.push(addEventListener('text-change', () => vscode.window.activeTextEditor?.setDecorations(decorationType, [])))
 
+  disposes.push(addEventListener('selection-change', () => vscode.window.activeTextEditor?.setDecorations(decorationType, [])))
+
   context.subscriptions.push(...disposes)
   function setStyle(editor: vscode.TextEditor, realRangeMap: any[], selectedUnocssText: string) {
     // 增加decorationType样式
