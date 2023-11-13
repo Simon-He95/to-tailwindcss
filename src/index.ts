@@ -1,5 +1,6 @@
 import * as vscode from 'vscode'
-import { addEventListener, copyText, getConfiguration, message, registerCommand, updateText } from '@vscode-use/utils'
+import { addEventListener, getActiveTextEditorLanguageId, getConfiguration, getCopyText, getLocale, getSelection, message, registerCommand, setCopyText, updateText } from '@vscode-use/utils'
+import { transformStyleToTailwindcss } from 'transform-to-tailwindcss-core'
 import { CssToTailwindcssProcess } from './process'
 import { LRUCache, getMultipedTailwindcssText, hasFile } from './utils'
 import { openPlayground } from './openPlayground'
@@ -87,6 +88,50 @@ export async function activate(context: vscode.ExtensionContext) {
     })
   }))
 
+  // 注册快捷指令
+  context.subscriptions.push(registerCommand('totailwind.transform', async () => {
+    const { line, character, lineText } = getSelection()!
+    const copyText = (await getCopyText()).trim()
+    if (!copyText)
+      return
+    const locale = getLocale()
+    const isZh = locale.includes('zh')
+    let pre = character - 1
+    let prefixName = ''
+    while (pre > 0 && (lineText[pre] !== '"' || lineText[pre - 1] !== '=') && (lineText[pre] !== '{' || lineText[pre - 1] !== '=')) {
+      if ((lineText[pre] === '>' || lineText[pre] === '"') && lineText[pre - 1] !== '=') {
+        prefixName = ''
+        break
+      }
+      pre--
+    }
+
+    if (lineText[--pre] === '=') {
+      pre--
+      while (pre > 0 && !(/[\s'"><\/]/.test(lineText[pre]))) {
+        prefixName = `${lineText[pre]}${prefixName}`
+        pre--
+      }
+    }
+
+    const [transferred, noTransferred] = transformStyleToTailwindcss(copyText)
+    const lan = getActiveTextEditorLanguageId()!
+    let result = ''
+    if (prefixName === 'class' || prefixName === 'className')
+      result = transferred
+    else
+      result = `${['javascriptreact', 'typescriptreact'].includes(lan) ? 'className' : 'class'}="${transferred}"`
+
+    if (noTransferred.length)
+      message.error(`${isZh ? '⚠️ 有一些属性unocss暂时还不支持转换，请自行处理：' : '⚠️ Some attributes unocss do not support conversion for the time being, please deal with them by yourself: '}${noTransferred.join('; ')}`)
+
+    updateText((builder) => {
+      builder.insert(new vscode.Position(line, character), result)
+    })
+
+    message.info(`${isZh ? '🎉 转换成功：' : '🎉 Successful conversion: '}${transferred}`)
+  }))
+
   context.subscriptions.push(vscode.window.onDidChangeTextEditorVisibleRanges(() => {
     // 移除装饰器
     if (vscode.window.activeTextEditor)
@@ -95,11 +140,12 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // copy
   disposes.push(registerCommand('totailwind.copyClass', () => {
-    copyText(copyClass)
+    setCopyText(copyClass)
     message.info('copy successfully')
   }))
+
   disposes.push(registerCommand('totailwind.copyClassRem', () => {
-    copyText(copyClassRem)
+    setCopyText(copyClassRem)
     message.info('copy successfully')
   }))
 

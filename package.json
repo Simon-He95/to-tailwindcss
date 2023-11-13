@@ -73,6 +73,18 @@
         "command": "totailwind.openPlayground",
         "title": "openPlayground"
       }
+    ],
+    "keybindings": [
+      {
+        "command": "totailwind.transform",
+        "key": "cmd+alt+v",
+        "when": "isMac"
+      },
+      {
+        "command": "totailwind.transform",
+        "key": "ctrl+alt+v",
+        "when": "!isMac"
+      }
     ]
   },
   "scripts": {
@@ -91,7 +103,7 @@
     "@types/node": "^18.15.11",
     "@types/vscode": "^1.77.0",
     "@vscode-use/createwebview": "^0.0.11",
-    "@vscode-use/utils": "^0.0.32",
+    "@vscode-use/utils": "^0.0.58",
     "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
     "esno": "^0.16.3",
