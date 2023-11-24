@@ -19,78 +19,10 @@ export async function activate(context: vscode.ExtensionContext) {
   openPlayground(context)
   openTailwindPlayground(context)
 
-  if (!isTailwindcssEnv)
-    return
-
-  let copyClass = ''
-  let copyClassRem = ''
-  const styleReg = /style="([^"]+)"/
-  const { dark, light } = getConfiguration('to-tailwindcss')
-  const process = new CssToTailwindcssProcess()
-  const LANS = ['html', 'vue', 'javascriptreact', 'typescriptreact', 'svelte', 'solid', 'swan', 'react', 'js', 'ts', 'tsx', 'jsx', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
-  const md = new vscode.MarkdownString()
-  md.isTrusted = true
-  md.supportHtml = true
-  // style
-  const style = {
-    dark: Object.assign({
-      textDecoration: 'underline',
-      backgroundColor: 'rgba(144, 238, 144, 0.5)',
-      color: 'black',
-    }, dark),
-    light: Object.assign({
-      textDecoration: 'underline',
-      backgroundColor: 'rgba(255, 165, 0, 0.5)',
-      color: '#ffffff',
-      borderRadius: '6px',
-    }, light),
-  }
-  const disposes = []
-
-  const decorationType = vscode.window.createTextEditorDecorationType(style)
-
-  // 注册ToTailwindcss命令
-  disposes.push(registerCommand('totailwind.ToTailwindcss', async (textEditor) => {
-    const doc = textEditor.document
-    const isJsx = doc.languageId === 'typescriptreact'
-    const fileName = doc.fileName
-    const start = new vscode.Position(0, 0)
-    const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
-    // 获取全部文本区域
-    const selection = new vscode.Range(start, end)
-    const text = doc.getText(selection)
-    // 替换文件内容
-    const newSelection = await process.convertAll(text, fileName, isJsx)
-    if (!newSelection)
-      return
-    updateText((builder: any) => {
-      builder.replace(selection, newSelection)
-    })
-  }))
-
-  // 注册InlineStyleToTailwindcss命令
-  disposes.push(registerCommand('totailwind.InlineStyleToTailwindcss', async (textEditor) => {
-    const doc = textEditor.document
-    const isJsx = doc.languageId === 'typescriptreact'
-    let selection: vscode.Selection | vscode.Range = textEditor.selection
-    // 获取选中区域
-    if (selection.isEmpty) {
-      const start = new vscode.Position(0, 0)
-      const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
-      selection = new vscode.Range(start, end)
-    }
-    const text = doc.getText(selection)
-    const newSelection = await process.convert(text, isJsx)
-    if (!newSelection)
-      return
-    // 替换文件内容
-    updateText((builder) => {
-      builder.replace(selection, newSelection)
-    })
-  }))
-
   // 注册快捷指令
   context.subscriptions.push(registerCommand('totailwind.transform', async () => {
+    if (!isTailwindcssEnv)
+      return
     const { line, character, lineText } = getSelection()!
     const copyText = (await getCopyText()).trim()
     if (!copyText)
@@ -131,6 +63,80 @@ export async function activate(context: vscode.ExtensionContext) {
     })
 
     message.info(`${isZh ? '🎉 转换成功：' : '🎉 Successful conversion: '}${transferred}`)
+  }))
+
+  if (!isTailwindcssEnv)
+    return
+
+  let copyClass = ''
+  let copyClassRem = ''
+  const styleReg = /style="([^"]+)"/
+  const { dark, light } = getConfiguration('to-tailwindcss')
+  const process = new CssToTailwindcssProcess()
+  const LANS = ['html', 'vue', 'javascriptreact', 'typescriptreact', 'svelte', 'solid', 'swan', 'react', 'js', 'ts', 'tsx', 'jsx', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
+  const md = new vscode.MarkdownString()
+  md.isTrusted = true
+  md.supportHtml = true
+  // style
+  const style = {
+    dark: Object.assign({
+      textDecoration: 'underline',
+      backgroundColor: 'rgba(144, 238, 144, 0.5)',
+      color: 'black',
+    }, dark),
+    light: Object.assign({
+      textDecoration: 'underline',
+      backgroundColor: 'rgba(255, 165, 0, 0.5)',
+      color: '#ffffff',
+      borderRadius: '6px',
+    }, light),
+  }
+  const disposes = []
+
+  const decorationType = vscode.window.createTextEditorDecorationType(style)
+
+  // 注册ToTailwindcss命令
+  // disposes.push(registerCommand('totailwind.ToTailwindcss', async (textEditor) => {
+  //   const doc = textEditor.document
+  //   const isJsx = doc.languageId === 'typescriptreact'
+  //   const fileName = doc.fileName
+  //   const start = new vscode.Position(0, 0)
+  //   const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
+  //   // 获取全部文本区域
+  //   const selection = new vscode.Range(start, end)
+  //   const text = doc.getText(selection)
+  //   // 替换文件内容
+  //   const newSelection = await process.convertAll(text, fileName, isJsx)
+  //   if (!newSelection)
+  //     return
+  //   updateText((builder: any) => {
+  //     builder.replace(selection, newSelection)
+  //   })
+  // }))
+
+  // 注册InlineStyleToTailwindcss命令
+  disposes.push(registerCommand('totailwind.InlineStyleToTailwindcss', async (textEditor) => {
+    if (!isTailwindcssEnv) {
+      message.error('当前非tailwind环境，无法使用此命令')
+      return
+    }
+    const doc = textEditor.document
+    const isJsx = doc.languageId === 'typescriptreact'
+    let selection: vscode.Selection | vscode.Range = textEditor.selection
+    // 获取选中区域
+    if (selection.isEmpty) {
+      const start = new vscode.Position(0, 0)
+      const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
+      selection = new vscode.Range(start, end)
+    }
+    const text = doc.getText(selection)
+    const newSelection = await process.convert(text, isJsx)
+    if (!newSelection)
+      return
+    // 替换文件内容
+    updateText((builder) => {
+      builder.replace(selection, newSelection)
+    })
   }))
 
   context.subscriptions.push(vscode.window.onDidChangeTextEditorVisibleRanges(() => {

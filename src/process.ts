@@ -1,5 +1,5 @@
-import { transfromCode } from 'transform-to-tailwindcss'
-import { getCssType, getMultipedTailwindcssText } from './utils'
+// import { transfromCode } from 'transform-to-tailwindcss'
+import { getMultipedTailwindcssText } from './utils'
 
 export class CssToTailwindcssProcess {
   /**
@@ -22,14 +22,14 @@ export class CssToTailwindcssProcess {
      * @return {string} fileName
      * @return {boolean} isJsx
      */
-  async convertAll(code: string, filepath: string, isJsx: boolean): Promise<string> {
-    if (!code)
-      return code
-    const type = getCssType(filepath) as any
-    const tailwindcss = (await transfromCode(code, { filepath, type }))
-    if (!tailwindcss)
-      return ''
+  // async convertAll(code: string, filepath: string, isJsx: boolean): Promise<string> {
+  // if (!code)
+  //   return code
+  // const type = getCssType(filepath) as any
+  // const tailwindcss = (await transfromCode(code, { filepath, type }))
+  // if (!tailwindcss)
+  //   return ''
 
-    return `${isJsx ? 'className' : 'class'}="${tailwindcss}"`
-  }
+  // return `${isJsx ? 'className' : 'class'}="${tailwindcss}"`
+  // }
 }
