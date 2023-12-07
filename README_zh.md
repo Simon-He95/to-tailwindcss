@@ -9,7 +9,7 @@ vscode扩展 -> 将css转换为tailwindcss
 
 -如果您的项目没有找到`tailwind.config.ts`或`tailwind.config.js`，该扩展将不会被激活
 
--直接通过快捷键“Mac”支持设计草案中的css？`cmd+alt+v`：`ctrl+alt+v`会自动转换为tailwindcss，并将根据您的位置自动处理为在线尾风css格式或类形式。
+-直接通过快捷键“Mac”支持设计草案中的css？`cmd+alt+x`：`ctrl+alt+x`会自动转换为tailwindcss，并将根据您的位置自动处理为在线尾风css格式或类形式。
 
 ## :coffee:
 

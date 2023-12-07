@@ -77,12 +77,12 @@
     "keybindings": [
       {
         "command": "totailwind.transform",
-        "key": "cmd+alt+v",
+        "key": "cmd+alt+x",
         "when": "isMac"
       },
       {
         "command": "totailwind.transform",
-        "key": "ctrl+alt+v",
+        "key": "ctrl+alt+x",
         "when": "!isMac"
       }
     ]
