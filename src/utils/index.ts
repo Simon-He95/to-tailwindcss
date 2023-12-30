@@ -31,8 +31,8 @@ export function getMultipedTailwindcssText(text: string) {
   if (!isChanged)
     return
 
-  const selectedUnocssText = selectedNewTexts.join(' ')
-  return selectedUnocssText
+  const selectedCssText = selectedNewTexts.join(' ')
+  return selectedCssText
 }
 
 export class LRUCache {
