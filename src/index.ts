@@ -56,7 +56,7 @@ export async function activate(context: vscode.ExtensionContext) {
       result = `${['javascriptreact', 'typescriptreact'].includes(lan) ? 'className' : 'class'}="${transferred}"`
 
     if (noTransferred.length)
-      message.error(`${isZh ? '⚠️ 有一些属性unocss暂时还不支持转换，请自行处理：' : '⚠️ Some attributes unocss do not support conversion for the time being, please deal with them by yourself: '}${noTransferred.join('; ')}`)
+      message.error(`${isZh ? '⚠️ 有一些属性to-tailwindcss暂时还不支持转换，请自行处理：' : '⚠️ Some attributes to-tailwindcss do not support conversion for the time being, please deal with them by yourself: '}${noTransferred.join('; ')}`)
 
     updateText((builder) => {
       builder.insert(new vscode.Position(line, character), result)
@@ -220,13 +220,13 @@ export async function activate(context: vscode.ExtensionContext) {
         return
       if (cacheMap.has((selectedText)))
         return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
-      const selectedUnocssText = getMultipedTailwindcssText(selectedText)
-      if (!selectedUnocssText)
+      const selectedCssText = getMultipedTailwindcssText(selectedText)
+      if (!selectedCssText)
         return
       // 设置缓存
-      cacheMap.set(selectedText, selectedUnocssText)
+      cacheMap.set(selectedText, selectedCssText)
 
-      return setStyle(editor, realRangeMap, selectedUnocssText)
+      return setStyle(editor, realRangeMap, selectedCssText)
     },
   }))
 
@@ -236,18 +236,18 @@ export async function activate(context: vscode.ExtensionContext) {
   disposes.push(addEventListener('selection-change', () => vscode.window.activeTextEditor?.setDecorations(decorationType, [])))
 
   context.subscriptions.push(...disposes)
-  function setStyle(editor: vscode.TextEditor, realRangeMap: any[], selectedUnocssText: string) {
+  function setStyle(editor: vscode.TextEditor, realRangeMap: any[], selectedCssText: string) {
     // 增加decorationType样式
     editor.edit(() => editor.setDecorations(decorationType, realRangeMap.map((item: any) => item.range)))
     md.value = ''
-    copyClass = selectedUnocssText
-    copyClassRem = selectedUnocssText.replace(
+    copyClass = selectedCssText
+    copyClassRem = selectedCssText.replace(
       /-\[([0-9\.]+)px\]/,
       (_: string, v: string) => `-[${+v / 16}rem]`,
     )
     const copyIcon = '<img width="12" height="12" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UyOWNkMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggZD0iTTIwLjk5OCAxMGMtLjAxMi0yLjE3NS0uMTA4LTMuMzUzLS44NzctNC4xMjFDMTkuMjQzIDUgMTcuODI4IDUgMTUgNWgtM2MtMi44MjggMC00LjI0MyAwLTUuMTIxLjg3OUM2IDYuNzU3IDYgOC4xNzIgNiAxMXY1YzAgMi44MjggMCA0LjI0My44NzkgNS4xMjFDNy43NTcgMjIgOS4xNzIgMjIgMTIgMjJoM2MyLjgyOCAwIDQuMjQzIDAgNS4xMjEtLjg3OUMyMSAyMC4yNDMgMjEgMTguODI4IDIxIDE2di0xIi8+PHBhdGggZD0iTTMgMTB2NmEzIDMgMCAwIDAgMyAzTTE4IDVhMyAzIDAgMCAwLTMtM2gtNEM3LjIyOSAyIDUuMzQzIDIgNC4xNzIgMy4xNzJDMy41MTggMy44MjUgMy4yMjkgNC43IDMuMTAyIDYiLz48L2c+PC9zdmc+" />'
-    md.appendMarkdown('<a href="https://github.com/Simon-He95/totailwind">To Tailwindcss:</a>\n')
-    md.appendMarkdown(`\n<a href="command:totailwind.copyClass" style="display:flex;align-items:center;gap:5px;"> ${selectedUnocssText} ${copyIcon}</a>\n`)
+    md.appendMarkdown('<a href="https://github.com/Simon-He95/to-tailwindcss">To Tailwindcss:</a>\n')
+    md.appendMarkdown(`\n<a href="command:totailwind.copyClass" style="display:flex;align-items:center;gap:5px;"> ${selectedCssText} ${copyIcon}</a>\n`)
     md.appendMarkdown(`\n<a href="command:totailwind.copyClassRem" style="display:flex;align-items:center;gap:5px;"> ${copyClassRem} ${copyIcon}</a>\n`)
     return new vscode.Hover(md)
   }

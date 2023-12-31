@@ -5,10 +5,11 @@ export class CssToTailwindcssProcess {
   /**
      * transform px to rpx
      *
-     * @param {string} code origin
-     * @return {boolean} isJsx
+     * @param {string} text origin
+     * @param {boolean} isJsx
+     * @return {string}
      */
-  convert(text: string, isJsx: boolean) {
+  convert(text: string, isJsx: boolean): string {
     const tailwindcss = getMultipedTailwindcssText(text)
     if (!tailwindcss)
       return ''
@@ -19,8 +20,8 @@ export class CssToTailwindcssProcess {
      * transform all page to tailwindcss
      *
      * @param {string} code origin
-     * @return {string} fileName
-     * @return {boolean} isJsx
+     * @param {string} fileName
+     * @param {boolean} isJsx
      */
   // async convertAll(code: string, filepath: string, isJsx: boolean): Promise<string> {
   // if (!code)

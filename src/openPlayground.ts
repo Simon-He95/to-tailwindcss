@@ -28,7 +28,7 @@ export function openPlayground(context: ExtensionContext) {
           </style>
         </head>
         <body>
-          <iframe id="unocss-documentation" src="${url}" width="100%" height="100%"></iframe>
+          <iframe id="tailwind-documentation" src="${url}" width="100%" height="100%"></iframe>
         </body>
       </html>
       `, ({ data, type }) => {
