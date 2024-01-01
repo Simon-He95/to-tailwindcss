@@ -42,11 +42,11 @@ importers:
         specifier: ^4.4.1
         version: 4.4.1
       transform-to-tailwindcss:
-        specifier: ^0.0.17
-        version: 0.0.17
+        specifier: ^0.0.18
+        version: 0.0.18
       transform-to-tailwindcss-core:
-        specifier: ^0.0.12
-        version: 0.0.12
+        specifier: ^0.0.13
+        version: 0.0.13
       tsup:
         specifier: ^6.7.0
         version: 6.7.0(typescript@5.3.2)
@@ -4375,13 +4375,13 @@ packages:
       punycode: 2.1.1
     dev: true
 
-  /transform-to-tailwindcss-core@0.0.12:
-    resolution: {integrity: sha512-RVu95r9xmGXUy83CawtnYD4I0EWXhc7MhV1sflJ17iNYjVpfnCZMOytOR/itACho2oZunSX9Sso+JYu3xJPvdw==}
+  /transform-to-tailwindcss-core@0.0.13:
+    resolution: {integrity: sha512-6qSaxZ/auNAkaCb2w+QWaV6U2qaqHJcK7NgHn7KOwQ/RYPvZdDpozUJ6fji7ypYl3XG0QsW/3gE1ArfiHW3vcA==}
     hasBin: true
     dev: true
 
-  /transform-to-tailwindcss@0.0.17:
-    resolution: {integrity: sha512-Kxxuo/ruTAsuxefDWabMdzRjKh6SlPS/eBbFPCkw+g5uY73IwcEu6l/ZszPGAfHcUfvLY/DSFz5bYkazh4n8NQ==}
+  /transform-to-tailwindcss@0.0.18:
+    resolution: {integrity: sha512-7oq1oWmcSKGCvSVlAm9CQ4pFMmtKBKL61R9WsqJTu8c/vfbaVapPz5qn41cy5dOKyLUhwuMWhQX9dGEbxkgnTg==}
     hasBin: true
     dependencies:
       fast-glob: 3.3.2
