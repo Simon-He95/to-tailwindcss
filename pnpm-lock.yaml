@@ -45,8 +45,8 @@ importers:
         specifier: ^0.0.18
         version: 0.0.18
       transform-to-tailwindcss-core:
-        specifier: ^0.0.13
-        version: 0.0.13
+        specifier: ^0.0.14
+        version: 0.0.14
       tsup:
         specifier: ^6.7.0
         version: 6.7.0(typescript@5.3.2)
@@ -4375,8 +4375,8 @@ packages:
       punycode: 2.1.1
     dev: true
 
-  /transform-to-tailwindcss-core@0.0.13:
-    resolution: {integrity: sha512-6qSaxZ/auNAkaCb2w+QWaV6U2qaqHJcK7NgHn7KOwQ/RYPvZdDpozUJ6fji7ypYl3XG0QsW/3gE1ArfiHW3vcA==}
+  /transform-to-tailwindcss-core@0.0.14:
+    resolution: {integrity: sha512-0YTMtyoL+rvsc5wBxCZiWBRdGfa34z3/FHeNxC4rfjkq4SiEPYRP6hBp243/CNivmXeN6iRMIWg5yzq5/vkkgg==}
     hasBin: true
     dev: true
 
