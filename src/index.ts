@@ -70,6 +70,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   let copyClass = ''
   let copyClassRem = ''
+  let copyRange: any = null
   const styleReg = /style="([^"]+)"/
   const { dark, light } = getConfiguration('to-tailwindcss')
   const process = new CssToTailwindcssProcess()
@@ -145,15 +146,34 @@ export async function activate(context: vscode.ExtensionContext) {
       vscode.window.activeTextEditor.setDecorations(decorationType, [])
   }))
 
+  function replaceStyleToAttr(text: string) {
+    // if (copyRange?.length) {
+    //   const item = copyRange[0]
+    //   item.range.start.line
+
+    //   updateText(edit => {
+    //     edit.replace(item.range, '') // style设为空
+    //     // todo: 找到属性位置设置到属性中，还要考虑使用的是class还是直接attributify
+    //   })
+    // } else {
+    //   const selection = getSelection()
+    //   const { line, character, lineText } = selection!
+    //   debugger
+    // }
+  }
+
   // copy
   disposes.push(registerCommand('totailwind.copyClass', () => {
     setCopyText(copyClass)
     message.info('copy successfully')
+    // replaceStyleToAttr(copyClass)
   }))
 
   disposes.push(registerCommand('totailwind.copyClassRem', () => {
     setCopyText(copyClassRem)
     message.info('copy successfully')
+    // 将当前鼠标位置的文本替换为转换后的文本
+    // replaceStyleToAttr(copyClassRem)
   }))
 
   // 注册hover事件
@@ -245,6 +265,7 @@ export async function activate(context: vscode.ExtensionContext) {
       /-\[([0-9\.]+)px\]/,
       (_: string, v: string) => `-[${+v / 16}rem]`,
     )
+    copyRange = realRangeMap
     const copyIcon = '<img width="12" height="12" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UyOWNkMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggZD0iTTIwLjk5OCAxMGMtLjAxMi0yLjE3NS0uMTA4LTMuMzUzLS44NzctNC4xMjFDMTkuMjQzIDUgMTcuODI4IDUgMTUgNWgtM2MtMi44MjggMC00LjI0MyAwLTUuMTIxLjg3OUM2IDYuNzU3IDYgOC4xNzIgNiAxMXY1YzAgMi44MjggMCA0LjI0My44NzkgNS4xMjFDNy43NTcgMjIgOS4xNzIgMjIgMTIgMjJoM2MyLjgyOCAwIDQuMjQzIDAgNS4xMjEtLjg3OUMyMSAyMC4yNDMgMjEgMTguODI4IDIxIDE2di0xIi8+PHBhdGggZD0iTTMgMTB2NmEzIDMgMCAwIDAgMyAzTTE4IDVhMyAzIDAgMCAwLTMtM2gtNEM3LjIyOSAyIDUuMzQzIDIgNC4xNzIgMy4xNzJDMy41MTggMy44MjUgMy4yMjkgNC43IDMuMTAyIDYiLz48L2c+PC9zdmc+" />'
     md.appendMarkdown('<a href="https://github.com/Simon-He95/to-tailwindcss">To Tailwindcss:</a>\n')
     md.appendMarkdown(`\n<a href="command:totailwind.copyClass" style="display:flex;align-items:center;gap:5px;"> ${selectedCssText} ${copyIcon}</a>\n`)
