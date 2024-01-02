@@ -1,8 +1,9 @@
 import * as vscode from 'vscode'
-import { addEventListener, getActiveTextEditorLanguageId, getConfiguration, getCopyText, getLocale, getSelection, message, registerCommand, setCopyText, updateText } from '@vscode-use/utils'
+import { addEventListener, getActiveText, getActiveTextEditor, getActiveTextEditorLanguageId, getConfiguration, getCopyText, getLineText, getLocale, getSelection, message, registerCommand, setCopyText, updateText } from '@vscode-use/utils'
 import { transformStyleToTailwindcss } from 'transform-to-tailwindcss-core'
 import { CssToTailwindcssProcess } from './process'
 import { LRUCache, getMultipedTailwindcssText, hasFile } from './utils'
+import { parser } from './parser'
 import { openPlayground } from './openPlayground'
 import { openTailwindPlayground } from './openTailwindPlayground'
 
@@ -116,13 +117,16 @@ export async function activate(context: vscode.ExtensionContext) {
   // }))
 
   // 注册InlineStyleToTailwindcss命令
-  disposes.push(registerCommand('totailwind.InlineStyleToTailwindcss', async (textEditor) => {
+  disposes.push(registerCommand('totailwind.InlineStyleToTailwindcss', async () => {
     if (!isTailwindcssEnv) {
       message.error('当前非tailwind环境，无法使用此命令')
       return
     }
+    const textEditor = getActiveTextEditor()
+    if (!textEditor)
+      return
     const doc = textEditor.document
-    const isJsx = doc.languageId === 'typescriptreact'
+    const isJsx = getActiveTextEditorLanguageId() === 'typescriptreact'
     let selection: vscode.Selection | vscode.Range = textEditor.selection
     // 获取选中区域
     if (selection.isEmpty) {
@@ -147,33 +151,73 @@ export async function activate(context: vscode.ExtensionContext) {
   }))
 
   function replaceStyleToAttr(text: string) {
-    // if (copyRange?.length) {
-    //   const item = copyRange[0]
-    //   item.range.start.line
+    let item: any
+    let isRemoveAfter = false
+    if (copyRange?.length) {
+      // 如果最后一位的后面跟着; 则end+1
+      const afterChar = getLineText(copyRange[0].range.end.line)![copyRange[0].range.end.character]
+      isRemoveAfter = afterChar === ';'
+      item = {
+        range: copyRange[0].range,
+      }
+    }
+    else {
+      item = {
+        range: getActiveTextEditor()!.selection,
+      }
+    }
 
-    //   updateText(edit => {
-    //     edit.replace(item.range, '') // style设为空
-    //     // todo: 找到属性位置设置到属性中，还要考虑使用的是class还是直接attributify
-    //   })
-    // } else {
-    //   const selection = getSelection()
-    //   const { line, character, lineText } = selection!
-    //   debugger
-    // }
+    const ast = parser(getActiveText()!, item.range.start)
+    if (ast?.tag) {
+      const propClass = ast.props?.find((i: any) => i.name === (ast.isJsx ? 'className' : 'class'))
+      if (propClass) {
+        updateText((edit) => {
+          edit.insert(new vscode.Position(propClass.value.loc.start.line - 1, propClass.value.loc.start.column), propClass.value.content ? `${text} ` : text)
+          edit.replace(updateRange(item.range), '')
+        })
+      }
+      else if (ast.props?.length > 1) {
+        const pos = ast.props.find((i: any) => i.name !== 'style')!.loc
+        updateText((edit) => {
+          edit.insert(new vscode.Position(pos.start.line - 1, pos.start.column - 1), `${ast.isJsx ? 'className' : 'class'}="${text}" `)
+          edit.replace(updateRange(item.range), '')
+        })
+      }
+      else {
+        const pos = {
+          line: ast.loc.start.line,
+          column: ast.loc.start.column + ast.tag.length + 1,
+          offset: ast.loc.start.offset + ast.tag.length + 1,
+        }
+        updateText((edit) => {
+          edit.insert(new vscode.Position(pos.line - 1, pos.column), `${ast.isJsx ? 'className' : 'class'}="${text}" `)
+          edit.replace(updateRange(item.range), '')
+        })
+      }
+    }
+    else {
+      updateText((edit) => {
+        edit.replace(updateRange(item.range), text)
+      })
+    }
+
+    function updateRange(range: any) {
+      if (!isRemoveAfter)
+        return range
+      return new vscode.Range(new vscode.Position(range.start.line, range.start.character), new vscode.Position(range.end.line, range.end.character + 1))
+    }
   }
 
   // copy
   disposes.push(registerCommand('totailwind.copyClass', () => {
     setCopyText(copyClass)
-    message.info('copy successfully')
-    // replaceStyleToAttr(copyClass)
+    replaceStyleToAttr(copyClass)
   }))
 
   disposes.push(registerCommand('totailwind.copyClassRem', () => {
     setCopyText(copyClassRem)
-    message.info('copy successfully')
     // 将当前鼠标位置的文本替换为转换后的文本
-    // replaceStyleToAttr(copyClassRem)
+    replaceStyleToAttr(copyClassRem)
   }))
 
   // 注册hover事件
