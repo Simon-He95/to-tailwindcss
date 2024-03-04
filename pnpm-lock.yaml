@@ -21,8 +21,8 @@ importers:
         specifier: ^0.0.11
         version: 0.0.11
       '@vscode-use/utils':
-        specifier: ^0.0.74
-        version: 0.0.74
+        specifier: ^0.0.86
+        version: 0.0.86
       '@vue/compiler-sfc':
         specifier: ^3.4.3
         version: 3.4.3
@@ -48,11 +48,11 @@ importers:
         specifier: ^4.2.8
         version: 4.2.8
       transform-to-tailwindcss:
-        specifier: ^0.0.19
-        version: 0.0.19
+        specifier: ^0.0.20
+        version: 0.0.20
       transform-to-tailwindcss-core:
-        specifier: ^0.0.14
-        version: 0.0.14
+        specifier: ^0.0.15
+        version: 0.0.15
       tsup:
         specifier: ^6.7.0
         version: 6.7.0(typescript@5.3.2)
@@ -1050,8 +1050,8 @@ packages:
     engines: {vscode: ^1.77.0}
     dev: true
 
-  /@vscode-use/utils@0.0.74:
-    resolution: {integrity: sha512-bwRQOabImFq79F4mRb5wUkRcolNY/+hnwSjknxdkGNbLBRpF9bzYGAFyeTgvPRjijtYcYXpcGvfBu5S64e+/GA==}
+  /@vscode-use/utils@0.0.86:
+    resolution: {integrity: sha512-w0uLUk/rUEPyigy1aIgfF0sAHmMMlRjhnjOy/ngXdZWoNp9JeJ5FPc1sy0Z+FBKsOUA9nWUBzOVdCpMrZRnVlQ==}
     engines: {vscode: ^1.77.0}
     dev: true
 
@@ -4604,13 +4604,13 @@ packages:
       punycode: 2.1.1
     dev: true
 
-  /transform-to-tailwindcss-core@0.0.14:
-    resolution: {integrity: sha512-0YTMtyoL+rvsc5wBxCZiWBRdGfa34z3/FHeNxC4rfjkq4SiEPYRP6hBp243/CNivmXeN6iRMIWg5yzq5/vkkgg==}
+  /transform-to-tailwindcss-core@0.0.15:
+    resolution: {integrity: sha512-GoUWQ0Oa71dQoK0aB2lndIcAMLW6/BeE/m4eKTKYb2PJ1bigifWF9SHxgqskyYO+91OadkqtnG5gb1mAKL5jvw==}
     hasBin: true
     dev: true
 
-  /transform-to-tailwindcss@0.0.19:
-    resolution: {integrity: sha512-/dA1OZXhzVzcY3c5M55Ic6iutwQAR9DW59JFo/W5/ebqWClGg5TDK3vrvU9LRAucFDCLpvLBiG4PtQ4UXdUeUQ==}
+  /transform-to-tailwindcss@0.0.20:
+    resolution: {integrity: sha512-vRP5sBRRYPvQv9MvPHBsLrbYxpSvFOEmXfkODTAatGOeCrsLFbBnM0+mBCEWBBhUaGFhuhRltdHoQX6sSOgmwg==}
     hasBin: true
     dependencies:
       fast-glob: 3.3.2

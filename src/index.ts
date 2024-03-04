@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { addEventListener, getActiveText, getActiveTextEditor, getActiveTextEditorLanguageId, getConfiguration, getCopyText, getLineText, getLocale, getSelection, message, registerCommand, setCopyText, updateText } from '@vscode-use/utils'
+import { addEventListener, createPosition, createStyle, getActiveText, getActiveTextEditor, getActiveTextEditorLanguageId, getConfiguration, getCopyText, getLineText, getLocale, getSelection, message, registerCommand, setCopyText, updateText } from '@vscode-use/utils'
 import { transformStyleToTailwindcss } from 'transform-to-tailwindcss-core'
 import { CssToTailwindcssProcess } from './process'
 import { LRUCache, getMultipedTailwindcssText, hasFile } from './utils'
@@ -95,7 +95,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }
   const disposes = []
 
-  const decorationType = vscode.window.createTextEditorDecorationType(style)
+  const decorationType = createStyle(style)
 
   // 注册ToTailwindcss命令
   disposes.push(registerCommand('totailwind.ToTailwind', async () => {
@@ -104,8 +104,8 @@ export async function activate(context: vscode.ExtensionContext) {
       return
     const doc = textEditor.document
     const fileName = doc.fileName
-    const start = new vscode.Position(0, 0)
-    const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
+    const start = createPosition(0, 0)
+    const end = createPosition(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
     // 获取全部文本区域
     const selection = new vscode.Range(start, end)
     const text = doc.getText(selection)
@@ -132,8 +132,8 @@ export async function activate(context: vscode.ExtensionContext) {
     let selection: vscode.Selection | vscode.Range = textEditor.selection
     // 获取选中区域
     if (selection.isEmpty) {
-      const start = new vscode.Position(0, 0)
-      const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
+      const start = createPosition(0, 0)
+      const end = createPosition(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
       selection = new vscode.Range(start, end)
     }
     const text = doc.getText(selection)
@@ -145,11 +145,9 @@ export async function activate(context: vscode.ExtensionContext) {
       builder.replace(selection, newSelection)
     })
   }))
-
-  context.subscriptions.push(vscode.window.onDidChangeTextEditorVisibleRanges(() => {
+  context.subscriptions.push(addEventListener('text-visible-change', () => {
     // 移除装饰器
-    if (vscode.window.activeTextEditor)
-      vscode.window.activeTextEditor.setDecorations(decorationType, [])
+    getActiveTextEditor()?.setDecorations(decorationType, [])
   }))
 
   function replaceStyleToAttr(text: string) {
@@ -174,14 +172,14 @@ export async function activate(context: vscode.ExtensionContext) {
       const propClass = ast.props?.find((i: any) => i.name === (ast.isJsx ? 'className' : 'class'))
       if (propClass) {
         updateText((edit) => {
-          edit.insert(new vscode.Position(propClass.value.loc.start.line - 1, propClass.value.loc.start.column), propClass.value.content ? `${text} ` : text)
+          edit.insert(createPosition(propClass.value.loc.start.line - 1, propClass.value.loc.start.column), propClass.value.content ? `${text} ` : text)
           edit.replace(updateRange(item.range), '')
         })
       }
       else if (ast.props?.length > 1) {
         const pos = ast.props.find((i: any) => i.name !== 'style')!.loc
         updateText((edit) => {
-          edit.insert(new vscode.Position(pos.start.line - 1, pos.start.column - 1), `${ast.isJsx ? 'className' : 'class'}="${text}" `)
+          edit.insert(createPosition(pos.start.line - 1, pos.start.column - 1), `${ast.isJsx ? 'className' : 'class'}="${text}" `)
           edit.replace(updateRange(item.range), '')
         })
       }
@@ -192,7 +190,7 @@ export async function activate(context: vscode.ExtensionContext) {
           offset: ast.loc.start.offset + ast.tag.length + 1,
         }
         updateText((edit) => {
-          edit.insert(new vscode.Position(pos.line - 1, pos.column), `${ast.isJsx ? 'className' : 'class'}="${text}" `)
+          edit.insert(createPosition(pos.line - 1, pos.column), `${ast.isJsx ? 'className' : 'class'}="${text}" `)
           edit.replace(updateRange(item.range), '')
         })
       }
@@ -206,7 +204,7 @@ export async function activate(context: vscode.ExtensionContext) {
     function updateRange(range: any) {
       if (!isRemoveAfter)
         return range
-      return new vscode.Range(new vscode.Position(range.start.line, range.start.character), new vscode.Position(range.end.line, range.end.character + 1))
+      return new vscode.Range(createPosition(range.start.line, range.start.character), createPosition(range.end.line, range.end.character + 1))
     }
   }
 
@@ -226,17 +224,19 @@ export async function activate(context: vscode.ExtensionContext) {
   disposes.push(vscode.languages.registerHoverProvider(LANS, {
     provideHover(document, position) {
       // 获取当前选中的文本范围
-      const editor = vscode.window.activeTextEditor
+      const editor = getActiveTextEditor()
       if (!editor)
         return
       // 移除样式
-      vscode.window.activeTextEditor?.setDecorations(decorationType, [])
+      editor.setDecorations(decorationType, [])
       const selection = editor.selection
       const wordRange = new vscode.Range(selection.start, selection.end)
       let selectedText = editor.document.getText(wordRange)
       const realRangeMap: any = []
       if (!selectedText) {
-        const range = document.getWordRangeAtPosition(position) as any
+        const range = document.getWordRangeAtPosition(position)
+        if (!range)
+          return
         let word = document.getText(range)
         const line = range.c.c
         const lineNumber = position.line
@@ -248,8 +248,8 @@ export async function activate(context: vscode.ExtensionContext) {
           realRangeMap.push({
             content: styleMatch[0],
             range: new vscode.Range(
-              new vscode.Position(line, index!),
-              new vscode.Position(line, index! + styleMatch[1].length),
+              createPosition(line, index!),
+              createPosition(line, index! + styleMatch[1].length),
             ),
           })
         }
@@ -270,8 +270,8 @@ export async function activate(context: vscode.ExtensionContext) {
               realRangeMap.push({
                 content: match[0],
                 range: new vscode.Range(
-                  new vscode.Position(line, index!),
-                  new vscode.Position(line, index! + match[0].length),
+                  createPosition(line, index!),
+                  createPosition(line, index! + match[0].length),
                 ),
               })
               break
@@ -297,9 +297,9 @@ export async function activate(context: vscode.ExtensionContext) {
   }))
 
   // 监听编辑器选择内容变化的事件
-  disposes.push(addEventListener('text-change', () => vscode.window.activeTextEditor?.setDecorations(decorationType, [])))
+  disposes.push(addEventListener('text-change', () => getActiveTextEditor()?.setDecorations(decorationType, [])))
 
-  disposes.push(addEventListener('selection-change', () => vscode.window.activeTextEditor?.setDecorations(decorationType, [])))
+  disposes.push(addEventListener('selection-change', () => getActiveTextEditor()?.setDecorations(decorationType, [])))
 
   context.subscriptions.push(...disposes)
   function setStyle(editor: vscode.TextEditor, realRangeMap: any[], selectedCssText: string) {
