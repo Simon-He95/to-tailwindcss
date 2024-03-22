@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-tailwindcss",
   "displayName": "To Tailwindcss",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "packageManager": "pnpm@8.10.5",
   "description": "Vscode extension transform css to tailwindcss",
   "author": "Simon He <https://github.com/Simon-He95>",
