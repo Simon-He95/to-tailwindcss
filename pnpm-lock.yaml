@@ -21,8 +21,8 @@ importers:
         specifier: ^0.0.11
         version: 0.0.11
       '@vscode-use/utils':
-        specifier: ^0.0.86
-        version: 0.0.86
+        specifier: ^0.0.91
+        version: 0.0.91
       '@vue/compiler-sfc':
         specifier: ^3.4.3
         version: 3.4.3
@@ -48,8 +48,8 @@ importers:
         specifier: ^4.2.8
         version: 4.2.8
       transform-to-tailwindcss:
-        specifier: ^0.0.23
-        version: 0.0.23
+        specifier: ^0.0.25
+        version: 0.0.25
       transform-to-tailwindcss-core:
         specifier: ^0.0.18
         version: 0.0.18
@@ -1050,8 +1050,8 @@ packages:
     engines: {vscode: ^1.77.0}
     dev: true
 
-  /@vscode-use/utils@0.0.86:
-    resolution: {integrity: sha512-w0uLUk/rUEPyigy1aIgfF0sAHmMMlRjhnjOy/ngXdZWoNp9JeJ5FPc1sy0Z+FBKsOUA9nWUBzOVdCpMrZRnVlQ==}
+  /@vscode-use/utils@0.0.91:
+    resolution: {integrity: sha512-L0BFtZqxzGLe//prPg98pNFYicsexXDZM4JWLfr3BmlY4RcsmXtm7Iqtre5s3lD+Fg0mBeNm7lkDAnq59RDoCg==}
     engines: {vscode: ^1.77.0}
     dev: true
 
@@ -4609,8 +4609,8 @@ packages:
     hasBin: true
     dev: true
 
-  /transform-to-tailwindcss@0.0.23:
-    resolution: {integrity: sha512-/jCe9xN3SzOCL8YhlI61vnwsDyVv+wb6asTz9/2rCE/zxzjmvAT6yD9OnwEGDdw8S/IsnLjbfN2WFjTa21JkNA==}
+  /transform-to-tailwindcss@0.0.25:
+    resolution: {integrity: sha512-G4E5jbKxMH+syoOiX6leYVfwCbAlI03K5Qx9RAlZ74jjfv5jKSnq2oa2XEGRyixUNsteac2ofzjJ4G5Msa55qQ==}
     hasBin: true
     dependencies:
       fast-glob: 3.3.2
