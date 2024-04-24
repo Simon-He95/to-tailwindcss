@@ -48,8 +48,8 @@ importers:
         specifier: ^4.2.8
         version: 4.2.8
       transform-to-tailwindcss:
-        specifier: ^0.0.22
-        version: 0.0.22
+        specifier: ^0.0.23
+        version: 0.0.23
       transform-to-tailwindcss-core:
         specifier: ^0.0.18
         version: 0.0.18
@@ -4609,8 +4609,8 @@ packages:
     hasBin: true
     dev: true
 
-  /transform-to-tailwindcss@0.0.22:
-    resolution: {integrity: sha512-PdY0NtuwDxz4SzQF+X94DtHZCFZyeGhjDxEfgRMS4dNCKeeaw2ZFMNWvzECuNiDi4ogpHw89vZefHHMOw2Wx9w==}
+  /transform-to-tailwindcss@0.0.23:
+    resolution: {integrity: sha512-/jCe9xN3SzOCL8YhlI61vnwsDyVv+wb6asTz9/2rCE/zxzjmvAT6yD9OnwEGDdw8S/IsnLjbfN2WFjTa21JkNA==}
     hasBin: true
     dependencies:
       fast-glob: 3.3.2
