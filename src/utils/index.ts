@@ -1,6 +1,6 @@
+import fg from 'fast-glob'
 import { toTailwindcss } from 'transform-to-tailwindcss-core'
 import * as vscode from 'vscode'
-import fg from 'fast-glob'
 
 export type CssType = 'less' | 'scss' | 'css' | 'stylus'
 export function getCssType(filename: string) {

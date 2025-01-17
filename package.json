@@ -24,9 +24,6 @@
   ],
   "main": "./dist/index.js",
   "icon": "icon.png",
-  "files": [
-    "dist"
-  ],
   "engines": {
     "vscode": "^1.84.2"
   },
@@ -99,22 +96,22 @@
     "test": "vitest",
     "build": "tsup src/index.ts --external vscode",
     "pack": "vsce package --no-dependencies",
-    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
-    "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache --fix",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --cache --fix",
     "publish": "vsce publish --no-dependencies",
     "typecheck": "tsc --noEmit",
     "release": "bumpp && pnpm run publish"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.38.6",
+    "@antfu/eslint-config": "^3.14.0",
     "@types/node": "^18.18.11",
     "@types/vscode": "^1.84.2",
-    "@vscode-use/createwebview": "^0.0.11",
-    "@vscode-use/utils": "^0.0.91",
+    "@vscode-use/createwebview": "^0.0.13",
+    "@vscode-use/utils": "^0.1.39",
+    "@vscode/vsce": "^3.2.1",
     "@vue/compiler-sfc": "^3.4.3",
     "bumpp": "^9.2.0",
-    "eslint": "^8.54.0",
-    "esno": "^0.16.3",
+    "eslint": "^9.18.0",
     "fast-glob": "^3.3.2",
     "pnpm": "^8.10.5",
     "rimraf": "^4.4.1",
@@ -123,8 +120,6 @@
     "transform-to-tailwindcss-core": "^0.0.19",
     "tsup": "^6.7.0",
     "typescript": "^5.3.2",
-    "vite": "^4.5.0",
-    "vitest": "^0.29.8",
-    "vsce": "^2.15.0"
+    "vitest": "^0.29.8"
   }
 }

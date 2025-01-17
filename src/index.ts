@@ -1,11 +1,11 @@
-import * as vscode from 'vscode'
 import { addEventListener, createPosition, createStyle, getActiveText, getActiveTextEditor, getActiveTextEditorLanguageId, getConfiguration, getCopyText, getLineText, getLocale, getSelection, message, registerCommand, setCopyText, updateText } from '@vscode-use/utils'
 import { transformStyleToTailwindcss } from 'transform-to-tailwindcss-core'
-import { CssToTailwindcssProcess } from './process'
-import { LRUCache, getMultipedTailwindcssText, hasFile } from './utils'
-import { parser } from './parser'
+import * as vscode from 'vscode'
 import { openPlayground } from './openPlayground'
 import { openTailwindPlayground } from './openTailwindPlayground'
+import { parser } from './parser'
+import { CssToTailwindcssProcess } from './process'
+import { getMultipedTailwindcssText, hasFile, LRUCache } from './utils'
 
 // 'use strict'
 
@@ -42,7 +42,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     if (lineText[--pre] === '=') {
       pre--
-      while (pre > 0 && !(/[\s'"><\/]/.test(lineText[pre]))) {
+      while (pre > 0 && !(/[\s'"></]/.test(lineText[pre]))) {
         prefixName = `${lineText[pre]}${prefixName}`
         pre--
       }
@@ -282,7 +282,7 @@ export async function activate(context: vscode.ExtensionContext) {
       }
 
       // 获取当前选中的文本内容
-      if (!selectedText || !/[\w\-]+\s*:[^.]+/.test(selectedText) || /[\|\?]/.test(selectedText))
+      if (!selectedText || !/[\w\-]+\s*:[^.]+/.test(selectedText) || /[|?]/.test(selectedText))
         return
       if (cacheMap.has((selectedText)))
         return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
@@ -308,7 +308,7 @@ export async function activate(context: vscode.ExtensionContext) {
     md.value = ''
     copyClass = selectedCssText
     copyClassRem = selectedCssText.replace(
-      /-\[([0-9\.]+)px\]/,
+      /-\[([0-9.]+)px\]/,
       (_: string, v: string) => `-[${+v / 16}rem]`,
     )
     copyRange = realRangeMap

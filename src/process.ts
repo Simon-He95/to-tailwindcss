@@ -3,12 +3,12 @@ import { getCssType, getMultipedTailwindcssText } from './utils'
 
 export class CssToTailwindcssProcess {
   /**
-     * transform px to rpx
-     *
-     * @param {string} text origin
-     * @param {boolean} isJsx
-     * @return {string}
-     */
+   * transform px to rpx
+   *
+   * @param {string} text origin
+   * @param {boolean} isJsx
+   * @return {string}
+   */
   convert(text: string, isJsx: boolean): string {
     const tailwindcss = getMultipedTailwindcssText(text)
     if (!tailwindcss)
@@ -17,12 +17,11 @@ export class CssToTailwindcssProcess {
   }
 
   /**
-     * transform all page to tailwindcss
-     *
-     * @param {string} code origin
-     * @param {string} fileName
-     * @param {boolean} isJsx
-     */
+   * transform all page to tailwindcss
+   *
+   * @param {string} code origin
+   * @param {string} filepath
+   */
   async convertAll(code: string, filepath: string): Promise<string> {
     if (!code)
       return code
