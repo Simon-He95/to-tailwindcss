@@ -3,7 +3,7 @@
   "name": "to-tailwindcss",
   "displayName": "To Tailwindcss",
   "version": "0.0.32",
-  "packageManager": "pnpm@8.10.5",
+  "packageManager": "pnpm@10.8.1",
   "description": "Vscode extension transform css to tailwindcss",
   "author": "Simon He <https://github.com/Simon-He95>",
   "license": "MIT",
@@ -25,7 +25,7 @@
   "main": "./dist/index.js",
   "icon": "icon.png",
   "engines": {
-    "vscode": "^1.84.2"
+    "vscode": "^1.77.0"
   },
   "activationEvents": [
     "onStartupFinished"
@@ -102,24 +102,23 @@
     "typecheck": "tsc --noEmit",
     "release": "bumpp && pnpm run publish"
   },
+  "dependencies": {
+    "transform-to-tailwindcss": "^0.0.31"
+  },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.14.0",
-    "@types/node": "^18.18.11",
-    "@types/vscode": "^1.84.2",
+    "@antfu/eslint-config": "^3.16.0",
+    "@types/node": "^18.19.86",
+    "@types/vscode": "1.77.0",
     "@vscode-use/createwebview": "^0.0.13",
-    "@vscode-use/utils": "^0.1.39",
-    "@vscode/vsce": "^3.2.1",
-    "@vue/compiler-sfc": "^3.4.3",
-    "bumpp": "^9.2.0",
-    "eslint": "^9.18.0",
-    "fast-glob": "^3.3.2",
-    "pnpm": "^8.10.5",
-    "rimraf": "^4.4.1",
-    "svelte": "^4.2.8",
-    "transform-to-tailwindcss": "^0.0.26",
-    "transform-to-tailwindcss-core": "^0.0.19",
+    "@vscode-use/utils": "^0.1.51",
+    "@vscode/vsce": "^3.3.2",
+    "bumpp": "^9.11.1",
+    "eslint": "^9.24.0",
+    "fast-glob": "^3.3.3",
+    "svelte": "^4.2.19",
+    "transform-to-tailwindcss-core": "^0.0.20",
     "tsup": "^6.7.0",
-    "typescript": "^5.3.2",
+    "typescript": "^5.8.3",
     "vitest": "^0.29.8"
   }
 }

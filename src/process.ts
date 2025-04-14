@@ -1,4 +1,4 @@
-import { transfromCode } from 'transform-to-tailwindcss'
+// import { transfromCode } from 'transform-to-tailwindcss'
 import { getCssType, getMultipedTailwindcssText } from './utils'
 
 export class CssToTailwindcssProcess {
@@ -26,6 +26,8 @@ export class CssToTailwindcssProcess {
     if (!code)
       return code
     const type = getCssType(filepath) as any
+    const { transfromCode } = await import('transform-to-tailwindcss')
+
     return await transfromCode(code, { filepath, type })
   }
 }
