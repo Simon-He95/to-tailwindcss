@@ -11,9 +11,6 @@ importers:
       '@typescript-eslint/typescript-estree':
         specifier: ^8.31.0
         version: 8.31.0(typescript@5.8.3)
-      '@vscode-use/createwebview':
-        specifier: ^0.0.13
-        version: 0.0.13
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -36,6 +33,9 @@ importers:
       '@types/vscode':
         specifier: 1.77.0
         version: 1.77.0
+      '@vscode-use/createwebview':
+        specifier: ^0.0.13
+        version: 0.0.13
       '@vscode-use/utils':
         specifier: ^0.1.53
         version: 0.1.53

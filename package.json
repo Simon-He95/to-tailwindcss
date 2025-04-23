@@ -116,7 +116,6 @@
   },
   "dependencies": {
     "@typescript-eslint/typescript-estree": "^8.31.0",
-    "@vscode-use/createwebview": "^0.0.13",
     "fast-glob": "^3.3.3",
     "svelte": "^4.2.19",
     "transform-to-tailwindcss": "^0.0.35",
