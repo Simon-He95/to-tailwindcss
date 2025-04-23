@@ -229,6 +229,8 @@ export async function activate(context: vscode.ExtensionContext) {
         return
       // 移除样式
       editor.setDecorations(decorationType, [])
+      if (!isTailwindcssEnv)
+        return
       const selection = editor.selection
       const wordRange = new vscode.Range(selection.start, selection.end)
       let selectedText = editor.document.getText(wordRange)

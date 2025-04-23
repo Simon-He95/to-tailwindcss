@@ -1,10 +1,10 @@
 {
   "publisher": "simonhe",
   "name": "to-tailwindcss",
-  "displayName": "To Tailwindcss",
+  "displayName": "To Tailwind CSS",
   "version": "0.0.33",
-  "packageManager": "pnpm@10.8.1",
-  "description": "Vscode extension transform css to tailwindcss",
+  "packageManager": "pnpm@10.9.0",
+  "description": "VS Code extension to quickly convert CSS or inline styles to Tailwind CSS utility classes. Boost productivity by transforming styles to Tailwind in one click.",
   "author": "Simon He <https://github.com/Simon-He95>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
@@ -19,8 +19,20 @@
   "sponsor": {
     "url": "https://github.com/Simon-He95/sponsor"
   },
+  "keywords": [
+    "tailwindcss",
+    "tailwind",
+    "css",
+    "convert",
+    "transform",
+    "inline style",
+    "vscode extension",
+    "utility classes"
+  ],
   "categories": [
-    "Other"
+    "Other",
+    "Linters",
+    "Formatters"
   ],
   "main": "./dist/index.js",
   "icon": "icon.png",
@@ -94,31 +106,34 @@
   "scripts": {
     "dev": "pnpm build --watch",
     "test": "vitest",
-    "build": "tsup src/index.ts --external vscode",
-    "pack": "vsce package --no-dependencies",
+    "build": "tsdown src/index.ts",
+    "pack": "vsce package",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
-    "publish": "vsce publish --no-dependencies",
+    "publish": "pnpx vsce publish",
     "typecheck": "tsc --noEmit",
-    "release": "bumpp && pnpm run publish"
+    "release": "pnpm run build && bumpp && pnpm run publish"
   },
   "dependencies": {
-    "transform-to-tailwindcss": "^0.0.31"
+    "@typescript-eslint/typescript-estree": "^8.31.0",
+    "@vscode-use/createwebview": "^0.0.13",
+    "fast-glob": "^3.3.3",
+    "svelte": "^4.2.19",
+    "transform-to-tailwindcss": "^0.0.35",
+    "transform-to-tailwindcss-core": "^0.0.25"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.16.0",
     "@types/node": "^18.19.86",
     "@types/vscode": "1.77.0",
     "@vscode-use/createwebview": "^0.0.13",
-    "@vscode-use/utils": "^0.1.51",
+    "@vscode-use/utils": "^0.1.53",
     "@vscode/vsce": "^3.3.2",
+    "@vue/compiler-sfc": "^3.5.13",
     "bumpp": "^9.11.1",
-    "eslint": "^9.24.0",
-    "fast-glob": "^3.3.3",
-    "svelte": "^4.2.19",
-    "transform-to-tailwindcss-core": "^0.0.20",
-    "tsup": "^6.7.0",
+    "eslint": "^9.25.1",
+    "tsdown": "^0.9.5",
     "typescript": "^5.8.3",
-    "vitest": "^0.29.8"
+    "vitest": "^3.1.2"
   }
 }
