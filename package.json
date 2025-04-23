@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-tailwindcss",
   "displayName": "To Tailwind CSS",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "packageManager": "pnpm@10.9.0",
   "description": "VS Code extension to quickly convert CSS or inline styles to Tailwind CSS utility classes. Boost productivity by transforming styles to Tailwind in one click.",
   "author": "Simon He <https://github.com/Simon-He95>",
