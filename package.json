@@ -3,7 +3,7 @@
   "name": "to-tailwindcss",
   "displayName": "To Tailwind CSS",
   "version": "0.0.35",
-  "packageManager": "pnpm@10.9.0",
+  "packageManager": "pnpm@10.10.0",
   "description": "VS Code extension to quickly convert CSS or inline styles to Tailwind CSS utility classes. Boost productivity by transforming styles to Tailwind in one click.",
   "author": "Simon He <https://github.com/Simon-He95>",
   "license": "MIT",
@@ -115,24 +115,24 @@
     "release": "pnpm run build && bumpp && pnpm run publish"
   },
   "dependencies": {
-    "@typescript-eslint/typescript-estree": "^8.31.0",
+    "@typescript-eslint/typescript-estree": "^8.32.0",
     "fast-glob": "^3.3.3",
     "svelte": "^4.2.19",
-    "transform-to-tailwindcss": "^0.0.35",
-    "transform-to-tailwindcss-core": "^0.0.25"
+    "transform-to-tailwindcss": "^0.0.38",
+    "transform-to-tailwindcss-core": "^0.0.31"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.16.0",
-    "@types/node": "^18.19.86",
+    "@types/node": "^18.19.100",
     "@types/vscode": "1.77.0",
     "@vscode-use/createwebview": "^0.0.13",
-    "@vscode-use/utils": "^0.1.53",
+    "@vscode-use/utils": "^0.1.57",
     "@vscode/vsce": "^3.3.2",
     "@vue/compiler-sfc": "^3.5.13",
     "bumpp": "^9.11.1",
-    "eslint": "^9.25.1",
-    "tsdown": "^0.9.5",
+    "eslint": "^9.26.0",
+    "tsdown": "^0.9.9",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.2"
+    "vitest": "^3.1.3"
   }
 }
