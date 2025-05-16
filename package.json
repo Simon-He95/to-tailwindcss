@@ -118,8 +118,8 @@
     "@typescript-eslint/typescript-estree": "^8.32.0",
     "fast-glob": "^3.3.3",
     "svelte": "^4.2.19",
-    "transform-to-tailwindcss": "^0.0.39",
-    "transform-to-tailwindcss-core": "^0.0.32"
+    "transform-to-tailwindcss": "^0.0.40",
+    "transform-to-tailwindcss-core": "^0.0.34"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.16.0",
