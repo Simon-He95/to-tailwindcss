@@ -115,11 +115,11 @@
     "release": "pnpm run build && bumpp && pnpm run publish"
   },
   "dependencies": {
-    "@typescript-eslint/typescript-estree": "^8.32.0",
+    "@typescript-eslint/typescript-estree": "^8.34.0",
     "fast-glob": "^3.3.3",
     "svelte": "^4.2.20",
-    "transform-to-tailwindcss": "^0.0.41",
-    "transform-to-tailwindcss-core": "^0.0.36"
+    "transform-to-tailwindcss": "^0.0.43",
+    "transform-to-tailwindcss-core": "^0.0.37"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.16.0",
