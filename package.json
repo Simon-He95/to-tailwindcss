@@ -118,8 +118,8 @@
     "@typescript-eslint/typescript-estree": "^8.34.0",
     "fast-glob": "^3.3.3",
     "svelte": "^4.2.20",
-    "transform-to-tailwindcss": "^0.0.43",
-    "transform-to-tailwindcss-core": "^0.0.37"
+    "transform-to-tailwindcss": "^0.0.46",
+    "transform-to-tailwindcss-core": "^0.0.38"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.16.0",
@@ -128,7 +128,7 @@
     "@vscode-use/createwebview": "^0.0.13",
     "@vscode-use/utils": "^0.1.58",
     "@vscode/vsce": "^3.5.0",
-    "@vue/compiler-sfc": "^3.5.16",
+    "@vue/compiler-sfc": "^3.5.17",
     "bumpp": "^9.11.1",
     "eslint": "^9.28.0",
     "tsdown": "^0.9.9",

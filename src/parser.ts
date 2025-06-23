@@ -19,7 +19,7 @@ export function parser(code: string, position: vscode.Position & { active: strin
   isInTemplate = false
   if (suffix === 'vue') {
     const result = transformVue(code, position)
-    if (!result.refs)
+    if (!result?.refs)
       return result
     const refsMap = findRefs(result.template)
     return Object.assign(result, { refsMap })
