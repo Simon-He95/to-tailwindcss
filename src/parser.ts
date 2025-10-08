@@ -397,7 +397,8 @@ function findJsxRefs(childrens: any, map: any = {}, refs: any = []) {
 
 function findRefs(template: SFCTemplateBlock) {
   const { ast } = template
-  return findRef(ast.children, {})
+
+  return findRef(ast?.children || [], {})
 }
 function findRef(children: any, map: any) {
   for (const child of children) {

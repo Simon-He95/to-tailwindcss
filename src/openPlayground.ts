@@ -7,7 +7,7 @@ export function openPlayground(context: ExtensionContext) {
   // webview 文档
   context.subscriptions.push(registerCommand('totailwind.openPlayground', () => {
     const title = 'totailwind playground'
-    const provider = new CreateWebview(context.extensionUri, {
+    const provider = new CreateWebview(context, {
       title,
       scripts: ['main.js'],
       viewColumn: vscode.ViewColumn.Beside,
