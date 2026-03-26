@@ -114,6 +114,9 @@
     "typecheck": "tsc --noEmit",
     "release": "pnpm run build && bumpp && pnpm run publish"
   },
+  "vsce": {
+    "dependencies": false
+  },
   "dependencies": {
     "@typescript-eslint/typescript-estree": "^8.47.0",
     "fast-glob": "^3.3.3",
